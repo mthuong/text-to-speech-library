@@ -1,0 +1,10 @@
+**/__tests__/**
+**/__mocks__/**
+**/__test_data__/**
+**/spec/**
+*.json
+# src/assets/
+metro.config.js
+babel.config.js
+react-native.config.js
+.eslintrc.js

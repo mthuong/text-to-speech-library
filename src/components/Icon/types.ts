@@ -1,0 +1,1 @@
+export type IconTypes = 'chevron-down' | 'search' | 'cog' | 'comment-o' | 'location_on' | 'arrow_back_ios'
