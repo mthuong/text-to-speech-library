@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ISignIn, ISignUp } from 'api/types'
 import { TUser } from 'models'
-import { conversationsFunctions } from 'scenes/chat/store/conversationsFunctions'
-import { usersFunctions } from 'scenes/chat/store/usersFunctions'
 
 import { userService } from '../api'
 
@@ -26,7 +24,7 @@ const signIn = createAsyncThunk(
       })
 
       return response
-    } catch (error) {
+    } catch (error: any) {
       dispatch(snackbarSlice.actions.show(error.message))
 
       return rejectWithValue(error.message)
@@ -44,7 +42,7 @@ const signUp = createAsyncThunk(
       await userService.updateUser(response, body)
 
       return response
-    } catch (error) {
+    } catch (error: any) {
       dispatch(snackbarSlice.actions.show(error.message))
 
       return rejectWithValue(error.message)
@@ -57,10 +55,7 @@ const signOut = createAsyncThunk(
   async (_, { rejectWithValue, dispatch }) => {
     try {
       await userService.signOut()
-
-      usersFunctions.unsubscribe()
-      conversationsFunctions.unsubscribe()
-    } catch (error) {
+    } catch (error: any) {
       dispatch(snackbarSlice.actions.show(error.message))
 
       return rejectWithValue(error.message)
@@ -73,12 +68,8 @@ const getUser = createAsyncThunk(
   async (uid: string, { rejectWithValue, dispatch }) => {
     try {
       const response = await userService.getUser(uid)
-      // Load conversations
-      dispatch(conversationsFunctions.listenForConversationAdded(response))
-      // Load users
-      dispatch(usersFunctions.listenForUserAdded(response))
       return response
-    } catch (error) {
+    } catch (error: any) {
       dispatch(snackbarSlice.actions.show(error.message))
 
       return rejectWithValue(error.message)

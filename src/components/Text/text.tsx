@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import {
   StyleProp,
   StyleSheet,
@@ -24,7 +24,7 @@ export interface ITextProps extends TextProps {
    * @type {string}
    * @memberof TextProps
    */
-  text?: string
+  text?: string | ReactNode
 
   /**
    * optional type

@@ -10,28 +10,16 @@ import { connect } from 'react-redux'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import SignIn, { SignInParams } from 'scenes/Authentication/SignIn'
-import SignUp, { SignUpParams } from 'scenes/Authentication/SignUp'
+import { SignInParams } from 'scenes/Authentication/SignIn'
+import { SignUpParams } from 'scenes/Authentication/SignUp'
 import SplashScreen from 'scenes/Authentication/SplashScreen'
-import {
-  ConversationScreen,
-  ConversationScreenParams,
-} from 'scenes/chat/conversation'
-import {
-  ConversationsScreen,
-  ConversationsScreenParams,
-} from 'scenes/chat/conversations'
-import {
-  CreateConversationScreen,
-  CreateConversationScreenParams,
-} from 'scenes/chat/create-conversation'
 import { StoryBook } from 'scenes/storybook'
 import { ReduxState } from 'stores/types'
 
 import { DetailsScreen, DetailsScreenParams } from '../scenes/Details'
 import { HomeScreen, HomeScreenParams } from '../scenes/Home'
 import { authAsyncActions, authSlice } from '../stores/authReducer'
-import { useAppDispatch, useAppSelector } from '../stores/hook'
+import { useAppDispatch } from '../stores/hook'
 
 import { navigationRef, navigationState } from './RootNavigation'
 import { NAV_SCREENS } from './RouteNames'
@@ -44,10 +32,6 @@ export type RootStackParamList = {
 
   [NAV_SCREENS.SignIn]: SignInParams
   [NAV_SCREENS.SignUp]: SignUpParams
-
-  [NAV_SCREENS.Conversations]: ConversationsScreenParams
-  [NAV_SCREENS.Conversation]: ConversationScreenParams
-  [NAV_SCREENS.CreateConversation]: CreateConversationScreenParams
 }
 
 // Update the param types when you have more screen params
@@ -56,9 +40,6 @@ export type RootStackParamTypes =
   | SignInParams
   | HomeScreenParams
   | DetailsScreenParams
-  | ConversationsScreenParams
-  | ConversationScreenParams
-  | CreateConversationScreenParams
 
 export const MainStack = createStackNavigator<RootStackParamList>()
 
@@ -66,8 +47,7 @@ type NavigationProps = ReturnType<typeof mapStateToProps>
 
 function Navigator(props: NavigationProps) {
   const isStoryBook = Config.ENVIRONMENT === 'storybook'
-  const useToken = useAppSelector(state => state.auth.user)
-  // const isLoading = useAppSelector((state) => state.auth.isLoading)
+
   const { isLoading } = props
   const dispatch = useAppDispatch()
 
@@ -107,58 +87,18 @@ function Navigator(props: NavigationProps) {
             navigationState.isReady = true
           }}>
           <MainStack.Navigator screenOptions={{ headerShown: false }}>
-            {!useToken ? (
-              <>
-                <MainStack.Screen
-                  {...SignIn.screen}
-                  options={{
-                    ...SignIn.defaultOptions,
-                    title: t('SignIn'),
-                  }}
-                />
-                <MainStack.Screen
-                  {...SignUp.screen}
-                  options={{
-                    ...SignUp.defaultOptions,
-                    title: t('SignUp'),
-                  }}
-                />
-              </>
-            ) : (
-              <>
-                <MainStack.Screen
-                  name={NAV_SCREENS.Home}
-                  component={HomeScreen}
-                  options={{ title: t('Home') }}
-                />
-                <MainStack.Screen
-                  name={NAV_SCREENS.Details}
-                  component={DetailsScreen}
-                  options={{ title: 'My details' }}
-                />
-                <MainStack.Screen
-                  name={NAV_SCREENS.Conversations}
-                  component={ConversationsScreen}
-                  options={{
-                    title: t('Conversations_Title'),
-                  }}
-                />
-                <MainStack.Screen
-                  name={NAV_SCREENS.CreateConversation}
-                  component={CreateConversationScreen}
-                  options={{
-                    title: t('ConversationNew'),
-                  }}
-                />
-                <MainStack.Screen
-                  name={NAV_SCREENS.Conversation}
-                  component={ConversationScreen}
-                  options={{
-                    title: t('ConversationDetail'),
-                  }}
-                />
-              </>
-            )}
+            <>
+              <MainStack.Screen
+                name={NAV_SCREENS.Home}
+                component={HomeScreen}
+                options={{ title: t('Home') }}
+              />
+              <MainStack.Screen
+                name={NAV_SCREENS.Details}
+                component={DetailsScreen}
+                options={{ title: 'My details' }}
+              />
+            </>
           </MainStack.Navigator>
         </NavigationContainer>
       )}

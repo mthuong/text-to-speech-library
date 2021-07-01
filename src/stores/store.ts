@@ -3,8 +3,6 @@ import {
   configureStore,
   getDefaultMiddleware,
 } from '@reduxjs/toolkit'
-import conversationsReducer from 'scenes/chat/store/conversationsReducer'
-import usersReducer from 'scenes/chat/store/usersReducer'
 
 import authReducer from './authReducer'
 import snackbarReducer from './snackbarReducer'
@@ -12,8 +10,6 @@ import snackbarReducer from './snackbarReducer'
 const rootReducer = combineReducers({
   auth: authReducer,
   snackbar: snackbarReducer,
-  conversations: conversationsReducer,
-  users: usersReducer,
 })
 
 const store = configureStore({
