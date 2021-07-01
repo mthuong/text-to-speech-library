@@ -134,3 +134,4 @@ iOSInjectionProject/
 
 # react-native-config codegen
 ios/tmp.xcconfig
+*.hprof
