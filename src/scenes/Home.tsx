@@ -284,10 +284,14 @@ export function HomeScreen() {
     setCurrentIndex(0)
   }, [questions])
 
+  const stop = useCallback(() => {
+    Tts.stop()
+  }, [])
+
   const play = useCallback(() => {
-    if (currentIndex + 1 >= questions.length) {
-      Tts.speak('Congratulation. Finished!!!!!!')
-      Alert.alert('Congratulation. Finished!!!!!!')
+    if (currentIndex + 1 > questions.length) {
+      Tts.speak('Congratulation. Your visa approved!!!!!!')
+      Alert.alert('Congratulation. Your visa approved!!!!!!')
       return
     }
     Tts.speak(questions[currentIndex])
@@ -359,7 +363,16 @@ export function HomeScreen() {
         preset='primary'
       />
 
-      <Text text={`${currentIndex + 1}/${questions.length}`} />
+      <ButtonText
+        text='Stop'
+        onPress={() => {
+          stop()
+        }}
+        style={[styles.button, styles.reset]}
+        preset='primary'
+      />
+
+      <Text text={`${currentIndex}/${questions.length}`} />
 
       <ButtonText
         text='Play'

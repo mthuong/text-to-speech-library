@@ -16,7 +16,7 @@
     "iprod": "npx react-native run-ios --scheme='ttsLibrary'",
     "adev": "ENVFILE=.env.dev npx react-native run-android --appId com.android.dev --main-activity MainActivity",
     "aqa": "ENVFILE=.env.qa npx react-native run-android --appId com.android.qa --main-activity MainActivity",
-    "aprod": "ENVFILE=.env npx react-native run-android --appId com.app.android --main-activity MainActivity",
+    "aprod": "ENVFILE=.env npx react-native run-android --appId com.ttslibrary.android --main-activity MainActivity",
     "a-dev-signing": "cd android && ENVFILE=.env.dev ./gradlew :app:signingReport",
     "a-qa-signing": "cd android && ENVFILE=.env.qa ./gradlew :app:signingReport",
     "a-prod-signing": "cd android && ENVFILE=.env ./gradlew :app:signingReport",
@@ -24,7 +24,8 @@
     "istorybook": "npx react-native run-ios --simulator='iPhone 11 Pro' --scheme='HelloWorld-storybook'",
     "astorybook": "ENVFILE=.env.storybook npx react-native run-android --appId com.android.dev --main-activity MainActivity",
     "storybook": "start-storybook -p 7007",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "reverse": "adb reverse tcp:9090 tcp:9090"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.6.0",
