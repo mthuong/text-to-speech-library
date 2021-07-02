@@ -35,6 +35,8 @@ platform :android do
         "ENVFILE": "../.env.dev"
       }
     )
+
+    puts lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
   end
 
   desc "Build QA"
@@ -45,6 +47,8 @@ platform :android do
         "ENVFILE": "../.env.qa"
       }
     )
+
+    puts lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
   end
 
   desc "Build PRODUCTION"
@@ -55,6 +59,8 @@ platform :android do
         "ENVFILE": "../.env"
       }
     )
+
+    puts lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
   end
 
   desc "Submit a new DEV Build to Firebase App Distribution"
