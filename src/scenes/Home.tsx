@@ -220,6 +220,7 @@ const quiz = [
   'Why do you want to study in Iowa, not other states?',
   'Do you have any international English certificates?',
   'What company are you working for?',
+  'Before ITAds, did you work?',
   'What year will you graduate?',
   'What’s the address of the university you will study?',
   'How long did you work there?',
@@ -249,7 +250,8 @@ const quiz = [
   'If a company gives you a very high salary and wants to keep you there? Are you sure you want to go back to Vietnam',
   'Tell me about a project that you are working on?',
   'What do you want to do after finishing your studies in the United State?',
-  'How long did you stop studying? How much is your salary?',
+  'How long did you stop studying?',
+  'How much is your salary?',
   'What education qualifications do you hold?',
   'How do you know about MIU?',
   "Why don't you have any English certificate?",
@@ -273,6 +275,9 @@ export function HomeScreen() {
     Tts.addEventListener('tts-cancel', ttsEvents)
 
     // randomVoice()
+
+    reset()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const [questions, setQuestions] = useState(quiz)
@@ -281,6 +286,7 @@ export function HomeScreen() {
 
   const reset = useCallback(() => {
     const shuffledArray = questions.sort((_, __) => 0.5 - Math.random())
+    console.tron.log(shuffledArray)
     setQuestions(shuffledArray)
     setCurrentIndex(0)
   }, [questions])
@@ -288,6 +294,10 @@ export function HomeScreen() {
   const stop = useCallback(() => {
     Tts.stop()
   }, [])
+
+  const replay = useCallback(() => {
+    Tts.speak(questions[currentIndex])
+  }, [currentIndex, questions])
 
   const play = useCallback(() => {
     if (currentIndex + 1 > questions.length) {
@@ -373,6 +383,15 @@ export function HomeScreen() {
         preset='primary'
       />
 
+      <ButtonText
+        text='Replay'
+        onPress={() => {
+          replay()
+        }}
+        style={[styles.button, styles.replay]}
+        preset='primary'
+      />
+
       <Text text={`${currentIndex}/${questions.length}`} />
 
       <ButtonText
@@ -404,5 +423,9 @@ const styles = StyleSheet.create({
   },
   play: {
     margin: 50,
+  },
+  replay: {
+    margin: 20,
+    backgroundColor: '#4caf50',
   },
 })
